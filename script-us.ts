@@ -11,12 +11,21 @@ const fetchTodos = async () => {
 }
 
 const addTodo = async (text: string) => {
-  // Create the POST request to add a TODO
+  const res = await fetch(`${API}/todos`, {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({text})
+  });
   return res.json() as Promise<Todo>;
 }
 
 const toggleTodo = async (id: number, completed: boolean) => {
-  // Create the PATH request to update TODO
+  const res = await fetch(`${API}/todos/${id}`, {
+    method: 'PATCH',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({completed})
+  });
+
   return res.json() as Promise<Todo>;
 }
 
@@ -39,23 +48,18 @@ const render = (todo: Todo) => {
 
 const init = async () => {
   const todos = await fetchTodos();
-  todos.forEach(t => listEl?.append(render(t)));
+  todos.forEach(t => listEl.append(render(t)));
 }
 
 init().catch(console.error);
 
 formEl?.addEventListener('submit', async e => {
   e.preventDefault();
-
   const text = inputEl?.value.trim();
   if (!text) return;
-
   const todo = await addTodo(text);
   listEl?.append(render(todo));
-
-  if (inputEl) {
-    inputEl.value = '';
-  }
+  inputEl.value = '';
 
   console.log('Todo added:', todo);
 });

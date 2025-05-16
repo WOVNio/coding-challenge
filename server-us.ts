@@ -25,8 +25,9 @@ app.get('/todos', (_, res) => {
 app.post('/todos', (req, res) => {
   const { text } = req.body as { text?: string };
   if (!text) return res.status(400).json({ error: 'Missing text' });
-
-  // Create a new TODO
+  const nextId = todos.length ? Math.max(...todos.map(t => t.id)) + 1 : 1;
+  const newTodo: Todo = { id: nextId, text, completed: false };
+  todos.push(newTodo);
   res.status(201).json(newTodo);
 });
 
@@ -34,8 +35,12 @@ app.post('/todos', (req, res) => {
 app.patch('/todos/:id', (req, res) => {
   const id = Number(req.params.id);
   const { completed } = req.body as { completed?: boolean };
-
-  // Check if TODO exists
+  const todo = todos.find(t => t.id === id);
+  if (!todo) return res.status(404).json({ error: 'Not found' });
+  if (typeof completed !== 'boolean') {
+    return res.status(400).json({ error: 'Missing completed flag' });
+  }
+  todo.completed = completed;
   res.json(todo);
 });
 

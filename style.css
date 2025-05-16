@@ -1,0 +1,30 @@
+/* style.css */
+body {
+  font-family: sans-serif;
+  margin: 2rem auto;
+  max-width: 400px;
+}
+
+#todo-list {
+  list-style: none; padding: 0;
+}
+#todo-list li {
+  display: flex; justify-content: space-between;
+  padding: 0.5rem; border-bottom: 1px solid #ddd;
+}
+
+#todo-list li.completed span {
+
+}
+
+#todo-form {
+  display: flex; margin-top: 1rem;
+}
+
+#todo-form input {
+  flex: 1; padding: 0.5rem; font-size: 1rem;
+}
+
+#todo-form button {
+  padding: 0.5rem 1rem; margin-left: 0.5rem; font-size: 1rem;
+}
