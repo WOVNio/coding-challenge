@@ -27,6 +27,7 @@ app.post('/todos', (req, res) => {
   if (!text) return res.status(400).json({ error: 'Missing text' });
 
   // Create a new TODO
+  const newTodo: Todo
   res.status(201).json(newTodo);
 });
 
@@ -36,6 +37,7 @@ app.patch('/todos/:id', (req, res) => {
   const { completed } = req.body as { completed?: boolean };
 
   // Check if TODO exists
+  // If exist, Mark TODO as completed or not
   res.json(todo);
 });
 
